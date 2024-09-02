@@ -254,10 +254,14 @@ async function matchEmailsAndUpdateOwners() {
 }
 
 // Schedule the task to run every minute
-cron.schedule('* * * * *', () => {
-    console.log('Running the scheduled task...');
-    matchEmailsAndUpdateOwners();
-});
+try {
+    cron.schedule('* * * * *', () => {
+        console.log('Running the scheduled task...');
+        matchEmailsAndUpdateOwners();
+    });
+} catch (error) {
+    console.error('Error scheduling cron job:', error.message);
+}
 
 // Start the server (optional, if you need a web server for other purposes)
 const express = require('express');
